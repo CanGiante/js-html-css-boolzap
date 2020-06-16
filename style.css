@@ -1,0 +1,73 @@
+/*_RESET_*/
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  color: lightgreen;
+  font-family: sans-serif;
+}
+
+/*_LAYOUT_*/
+.wrapper {
+  height: 100vh;
+  width: 100vw;
+  min-width: 876px;
+  background-image: linear-gradient(to bottom, #dddbd1, #d7dcd3, #d3dcd6, #d1dbd9, #d1dadb);
+}
+.topper {
+  width: 100%;
+  height: 125px;
+  background-color: #009688;
+}
+.box-app {
+  height: calc(100% - (20px + 20px));
+  width: 80%;
+  margin: auto;
+  margin-top: -105px;
+}
+
+/**__sidebar area__**/
+.sidebar {
+  background: red;
+  width: 40%;
+  height: 100%;
+  float: left;
+}
+.sidebar > header {
+  height: 65px;
+  background: rgba(11, 11, 9, 0.45);
+}
+.sidebar > .banner {
+  height: 80px;
+  background-color: #8edafc;
+}
+.sidebar > .search {
+  height: 55px;
+  background: rgba(11, 11, 9, 0.55);
+}
+.sidebar > .contacts {
+  height: calc(100% - (65px + 80px + 55px));
+  background: rgba(11, 11, 9, 0.65);
+  overflow-y: auto;
+}
+
+/**__content area__**/
+.content {
+  background: lightgreen;
+  width: 60%;
+  height: 100%;
+  float: right;
+}
+.content > header {
+  height: 65px;
+  background: rgba(11, 11, 9, 0.45);
+}
+.content > .chat {
+  height: calc(100% - (65px + 65px));
+  background: rgba(11, 11, 9, 0.55);
+  overflow-y: auto;
+}
+.content > .message {
+  height: 65px;
+  background: rgba(11, 11, 9, 0.65);
+}
