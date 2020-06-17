@@ -19,6 +19,7 @@ $(document).ready(function() {
   $('#btn-send').click(function()
     {
       sendMessage();
+      autoAnswer("ok");
     }
   );
 
@@ -26,13 +27,17 @@ $(document).ready(function() {
     {
       if (event.which === 13 || event.keyCode === 13) {
         sendMessage();
+        autoAnswer("ok");
       }
     }
   );
 
 });///end//ready///
 
-//\FUNCT///\
+//\FUNCTIONS///\
+//questa funzione stampa nella chat il valore inserito nel campo input.
+/// N.B. struttura e stile vengono definiti sulla
+///falsa riga di un template nascosto nell' html
 function sendMessage() {
 
   //salvo il valore di input in una variabile
@@ -41,7 +46,7 @@ function sendMessage() {
   var newMessage = $(".template .single-message").clone();
   //stampo in un suo figlio il valore di input
   newMessage.children(".msg-text").text(messageText);
-  //aggiungo lo stile al clone
+  //aggiungo al clone lo stile dei messaggi inviati
   newMessage.addClass("sent");
 
   //genero orario
@@ -49,7 +54,8 @@ function sendMessage() {
       var currentHours = date.getHours();
       var currentMinutes = date.getMinutes();
       var currentTime = addZero(currentHours) + ":" + addZero(currentMinutes);
-  //lo stampo nel selettore apposito e aggiungo classe con stile apposito
+  //lo stampo nell'elemento apposito del template e
+  //gli aggiungo direttamente anche la classe che definisce il suo stile
   newMessage.children(".msg-time").text(currentTime).addClass("timestamp");
 
   //appendo il clone di single-message a current-chat
@@ -67,5 +73,40 @@ function addZero(number) {
   }
 
   return number;
+
+}
+
+//funzione simile a sendMessage(),
+//stampa la stringa passata come argomento
+//con ritardo di un secondo
+function autoAnswer(answer) {
+
+  setTimeout(function() {
+
+    //clono il template
+    var newMessage = $(".template .single-message").clone();
+    //stampo in un suo figlio la stringa passata come argomento
+    newMessage.children(".msg-text").text(answer);
+    //aggiungo al clone lo stile dei messaggi ricevuti
+    newMessage.addClass("received");
+
+    //genero orario
+        var date = new Date();
+        var currentHours = date.getHours();
+        var currentMinutes = date.getMinutes();
+        var currentTime = addZero(currentHours) + ":" + addZero(currentMinutes);
+
+    //lo stampo nell'elemento apposito del template e
+    //gli aggiungo direttamente anche la classe che definisce il suo stile
+    newMessage.children(".msg-time").text(currentTime).addClass("timestamp");
+
+    //appendo il clone di single-message a current-chat
+    $(".chatbox > .current-chat").append(newMessage);
+
+    // $(".chatbox > .current-chat").scrollTop($(".current-chat").height());
+
+  }, 1000); //1sec
+
+  return answer;
 
 }
