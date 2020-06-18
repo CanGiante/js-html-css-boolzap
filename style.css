@@ -143,6 +143,7 @@ ul span {
   min-height: 80px;
   border: 1px solid #f5f5f5;
   padding: 10px 25px 10px 25px;
+  cursor: pointer;
 }
 .sidebar > .contacts li:hover {
   background-color: #e9ebeb;
@@ -242,4 +243,15 @@ ul span {
 }
 .template {
   display: none;
+}
+.other {
+  display: none;
+}
+.active {
+  display: block;
+}
+.chatbox > .current-chat.nothing-to-see {
+  background: #d5f9ba;
+  color: #009688;
+  font-family: monospace;
 }

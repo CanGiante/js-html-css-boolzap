@@ -23,19 +23,48 @@
 
 $(document).ready(function() {
 
-  $(".finder-input").keyup(function() {
+  $(".current-chat").addClass("other");
+  $(".current-chat.nothing-to-see").addClass("active");
 
+  $(".contact").click(function() {
+    //se clicco su un contatto mostro una current-chat relativa
+    $(".current-chat").removeClass("active");
+
+    //leggo il data contact
+    var dataContact = $(this).attr('data-contact');
+
+    //cerco il data-chat corrispondente
+    var selettore = '.current-chat[data-chat="' + dataContact + '"]';
+
+    console.log(dataContact);
+    console.log(selettore);
+
+
+    $(selettore).addClass("active");
+
+
+  });
+
+
+
+
+  $(".finder-input").keyup(function()
+  {
     var userSearch = $(this).val().toUpperCase();;
     var allContacts = $(".contact");
 
-    allContacts.each(function() {
-
+    allContacts.each(function()
+    {
       var contactName = $(this).find("h4").text().toUpperCase();;
 
-      if (contactName.includes(userSearch)) {
-        $(this).show();
-      } else {
-        $(this).hide();
+      if (contactName.includes(userSearch))
+      {
+          $(this).show();
+      }
+
+      else
+      {
+          $(this).hide();
       }
 
     });
@@ -45,24 +74,26 @@ $(document).ready(function() {
   $("#btn-send").click(function()
     {
       var valInput = $(".write input").val();
-      if (valInput != "") {
 
+      if (valInput != "")
+
+      {
         sendMessage();
         autoAnswer("ok");
-
       }
+
     }
   );
 
-  $(".write input").keypress(function(event) {
-
+  $(".write input").keypress(function(event)
+    {
       var valInput = $(".write input").val();
-      if (valInput != "") {
 
-        if ( event.which === 13
-          || event.keyCode === 13
-          || valInput !== "" ) {
+      if (valInput != "")
+      {
 
+        if ( event.which === 13 || event.keyCode === 13 )
+        {
           sendMessage();
           autoAnswer("ok");
         }
@@ -101,7 +132,7 @@ function sendMessage() {
   //appendo il clone di single-message a current-chat
   $(".chatbox > .current-chat").append(newMessage);
 
-  // $(".chatbox > .current-chat").scrollTop($(".current-chat").height());
+  $(".chatbox > .current-chat").scrollTop($(".current-chat").prop("scrollHeight"));
 
 }
 
@@ -143,7 +174,7 @@ function autoAnswer(answer) {
     //appendo il clone di single-message a current-chat
     $(".chatbox > .current-chat").append(newMessage);
 
-    // $(".chatbox > .current-chat").scrollTop($(".current-chat").height());
+    $(".chatbox > .current-chat").scrollTop($(".current-chat").prop("scrollHeight"));
 
   }, 1000); //1sec
 
