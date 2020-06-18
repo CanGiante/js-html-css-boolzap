@@ -13,22 +13,62 @@
 // solo i contatti il cui nome contiene le lettere inserite
 // (es, Marco, Matteo Martina -> Scrivo “mar” rimangono solo Marco e Martina)
 
+// Milestone 3
+// Click sul contatto mostra la conversazione del contatto cliccato,
+// è possibile inserire nuovi messaggi per ogni conversazione
+// Cancella messaggio: cliccando sul messaggio appare un menu a tendina che
+// permette di cancellare il messaggio selezionato
+
+
 
 $(document).ready(function() {
 
-  $('#btn-send').click(function()
+  $(".finder-input").keyup(function() {
+
+    var userSearch = $(this).val().toUpperCase();;
+    var allContacts = $(".contact");
+
+    allContacts.each(function() {
+
+      var contactName = $(this).find("h4").text().toUpperCase();;
+
+      if (contactName.includes(userSearch)) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
+
+    });
+
+  });
+
+  $("#btn-send").click(function()
     {
-      sendMessage();
-      autoAnswer("ok");
+      var valInput = $(".write input").val();
+      if (valInput != "") {
+
+        sendMessage();
+        autoAnswer("ok");
+
+      }
     }
   );
 
-  $(".write input").keypress(function(event)
-    {
-      if (event.which === 13 || event.keyCode === 13) {
-        sendMessage();
-        autoAnswer("ok");
+  $(".write input").keypress(function(event) {
+
+      var valInput = $(".write input").val();
+      if (valInput != "") {
+
+        if ( event.which === 13
+          || event.keyCode === 13
+          || valInput !== "" ) {
+
+          sendMessage();
+          autoAnswer("ok");
+        }
+
       }
+
     }
   );
 

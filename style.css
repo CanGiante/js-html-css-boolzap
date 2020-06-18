@@ -151,9 +151,12 @@ ul span {
 .sidebar .anteprima {
     flex-grow: 1;
   margin-left: 25px;
-  padding: 2% 0;
-  line-height: 22px;
+	margin-right: 25px;
+	white-space: nowrap;
+	overflow-x: hidden;
+	align-self: center;
 }
+
 
 /**________________content area________________**/
 .content {
@@ -213,18 +216,20 @@ ul span {
         word-break: break-word;
         clear: both;
 
-  padding: 15px;
-  padding-right: 45px;
-  margin-bottom: 15px;
+  padding: 10px;
+  padding-right: 50px;
+  padding-left: 25px;
+  margin-bottom: 10px;
   border-radius: 10px;
 
         position: relative;
+
 }
 .timestamp {
 	position: absolute;
 	bottom: 6px;
 	right: 6px;
-	font-size: 0.8em;
+	font-size: 0.7em;
 	color: #acacac;
 }
 .sent {
