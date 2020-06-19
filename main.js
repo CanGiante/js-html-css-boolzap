@@ -23,8 +23,6 @@
 
 $(document).ready(function() {
 
-  $(".current-chat").addClass("other");
-  $(".current-chat.nothing-to-see").addClass("active");
 
   $(".contact").click(function() {
     //se clicco su un contatto mostro una current-chat relativa
@@ -32,19 +30,12 @@ $(document).ready(function() {
 
     //leggo il data contact
     var dataContact = $(this).attr('data-contact');
-
     //cerco il data-chat corrispondente
-    var selettore = '.current-chat[data-chat="' + dataContact + '"]';
-
-    console.log(dataContact);
-    console.log(selettore);
-
+    var selettore = $('.current-chat[data-chat="' + dataContact + '"]');
 
     $(selettore).addClass("active");
 
-
   });
-
 
 
 
@@ -70,6 +61,8 @@ $(document).ready(function() {
     });
 
   });
+
+
 
   $("#btn-send").click(function()
     {
@@ -129,10 +122,14 @@ function sendMessage() {
   //gli aggiungo direttamente anche la classe che definisce il suo stile
   newMessage.children(".msg-time").text(currentTime).addClass("timestamp");
 
-  //appendo il clone di single-message a current-chat
-  $(".chatbox > .current-chat").append(newMessage);
 
-  $(".chatbox > .current-chat").scrollTop($(".current-chat").prop("scrollHeight"));
+  newMessage.children(".msg-arrow").addClass("arrow");
+
+
+  //appendo il clone di single-message a current-chat
+  $(".chatbox > .current-chat.active").append(newMessage);
+
+  $(".chatbox > .current-chat.active").scrollTop($(".current-chat").prop("scrollHeight"));
 
 }
 
@@ -171,10 +168,15 @@ function autoAnswer(answer) {
     //gli aggiungo direttamente anche la classe che definisce il suo stile
     newMessage.children(".msg-time").text(currentTime).addClass("timestamp");
 
-    //appendo il clone di single-message a current-chat
-    $(".chatbox > .current-chat").append(newMessage);
 
-    $(".chatbox > .current-chat").scrollTop($(".current-chat").prop("scrollHeight"));
+    newMessage.children(".msg-arrow").addClass("arrow");
+
+
+
+    //appendo il clone di single-message a current-chat
+    $(".chatbox > .current-chat.active").append(newMessage);
+
+    $(".chatbox > .current-chat.active").scrollTop($(".current-chat").prop("scrollHeight"));
 
   }, 1000); //1sec
 

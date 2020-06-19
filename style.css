@@ -182,6 +182,9 @@ ul span {
   padding-top: 40px;
   padding-left: 10%;
   padding-right: 10%;
+
+  display: none;
+
 }
 .content > .send-message {
     display: flex;
@@ -233,6 +236,44 @@ ul span {
 	font-size: 0.7em;
 	color: #acacac;
 }
+
+
+
+.arrow {
+
+  position: absolute;
+	top: 6px;
+	right: 17px;
+	font-size: 0.7em;
+	color: #acacac;
+
+  /* display: none; */
+
+}
+
+
+/*
+.options {
+  position: absolute;
+  background-color: white;
+  padding: 15px;
+  width: max-content;
+
+  display: none;
+
+}
+
+.options > li {
+  display: block;
+}
+
+.arrow:hover,
+.options:hover {
+  display: block;
+}
+ */
+
+
 .sent {
   float: right;
   background-color: #d5f9ba;
@@ -244,10 +285,7 @@ ul span {
 .template {
   display: none;
 }
-.other {
-  display: none;
-}
-.active {
+.chatbox > .current-chat.active {
   display: block;
 }
 .chatbox > .current-chat.nothing-to-see {
