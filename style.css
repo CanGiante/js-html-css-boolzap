@@ -157,7 +157,7 @@ ul span {
 	overflow-x: hidden;
 	align-self: center;
 }
-
+/**____________________________________________**/
 
 /**________________content area________________**/
 .content {
@@ -175,16 +175,17 @@ ul span {
 .content > .chatbox {
   height: calc(100% - (65px + 65px));
 }
-.content > .chatbox > .current-chat {
+.content > .chatbox > .window-chat {
   height: 100%;
   background-image: url(img/mine.jpg);
   overflow-y: auto;
   padding-top: 40px;
   padding-left: 10%;
   padding-right: 10%;
-
   display: none;
-
+}
+.content > .chatbox > .window-chat.current {
+  display: block;
 }
 .content > .send-message {
     display: flex;
@@ -210,45 +211,24 @@ ul span {
   border: none;
   padding-left: 15px;
 }
+/**____________________________________________**/
 
-/*______________________________________*/
 
+/*stile messaggio*/
 .single-message {
+  position: relative;
   width: max-content;
   max-width: 60%;
-
-        word-break: break-word;
-        clear: both;
-
+  word-break: break-word;
+  clear: both;
   padding: 10px;
-  padding-right: 50px;
-  padding-left: 25px;
+  padding-right: 40px;
+  padding-left: 10px;
   margin-bottom: 10px;
   border-radius: 10px;
-
-        position: relative;
-
 }
-.timestamp {
-	position: absolute;
-	bottom: 6px;
-	right: 6px;
-	font-size: 0.7em;
-	color: #acacac;
-}
-
-
-
-.arrow {
-
-  position: absolute;
-	top: 6px;
-	right: 17px;
-	font-size: 0.7em;
-	color: #acacac;
-
-  /* display: none; */
-
+.window-chat.current .msg-arrow {
+  display: none;
 }
 
 
@@ -274,6 +254,21 @@ ul span {
  */
 
 
+/*Classi di appoggio jS*/
+ .timestamp {
+ 	position: absolute;
+ 	bottom: 6px;
+ 	right: 6px;
+ 	font-size: 0.7em;
+ 	color: #acacac;
+ }
+ .arrow {
+  position: absolute;
+ 	top: 6px;
+ 	right: 17px;
+ 	font-size: 0.7em;
+ 	color: #acacac;
+ }
 .sent {
   float: right;
   background-color: #d5f9ba;
@@ -284,12 +279,4 @@ ul span {
 }
 .template {
   display: none;
-}
-.chatbox > .current-chat.active {
-  display: block;
-}
-.chatbox > .current-chat.nothing-to-see {
-  background: #d5f9ba;
-  color: #009688;
-  font-family: monospace;
 }
