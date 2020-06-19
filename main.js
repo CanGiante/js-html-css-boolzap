@@ -105,6 +105,21 @@ $(document).ready(function() {
   });
 
 
+  $(document).on("click", ".msg-arrow", function() {
+
+    $(this).siblings(".options").toggleClass("visible");
+    $(this).parent().siblings().find(".options").removeClass("visible");
+
+  });
+
+
+  $(document).on("click", ".delete", function() {
+
+    $(this).closest(".single-message").hide();
+
+  });
+
+
 });///end//ready///
 
 //\FUNCTIONS///\

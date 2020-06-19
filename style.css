@@ -230,28 +230,27 @@ ul span {
 .window-chat.current .msg-arrow {
   display: none;
 }
-
-
-/*
 .options {
   position: absolute;
   background-color: white;
-  padding: 15px;
+  box-shadow: 0px -2px 10px -2px rgba(0,0,0,0.75);
+  padding: 10px 15px;
   width: max-content;
-
+  list-style-type: none;
+  left: auto;
+  top: 25px;
+  right: 20px;
+  z-index: 1;
   display: none;
-
 }
-
-.options > li {
-  display: block;
+.single-message.received > .options {
+  left: auto;
+  top: 25px;
+  right: -55px;
 }
-
-.arrow:hover,
-.options:hover {
-  display: block;
+.delete {
+  cursor: pointer;
 }
- */
 
 
 /*Classi di appoggio jS*/
@@ -279,4 +278,10 @@ ul span {
 }
 .template {
   display: none;
+}
+
+.visible {
+
+  display: block;
+
 }
