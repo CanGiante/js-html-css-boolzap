@@ -24,15 +24,27 @@
 $(document).ready(function() {
 
   //SELEZIONE CHAT
+  //se clicco su un contatto mostro finestra chat relativa
   $(".contact").click(function() {
-    //se clicco su un contatto mostro una current-chat relativa
+
     $(".window-chat").removeClass("current");
+    $(".avatar-contact").removeClass("current");
+
+    var nomeContatto = $(this).find("h4").clone().text();
+    $(".header-right > .info-contact > h4").text(nomeContatto);
+
     //leggo il data contact
     var dataContact = $(this).attr('data-contact');
+
     //cerco il data-chat corrispondente
-    var selettore = $('.window-chat[data-chat="' + dataContact + '"]');
+    var selettoreChat = $('.window-chat[data-chat="' + dataContact + '"]');
     //lo mostro
-    $(selettore).addClass("current");
+    $(selettoreChat).addClass("current");
+
+    //cerco avatar corrispondente
+    var selettoreAvatar = $('.avatar-contact[data-avatar="' + dataContact + '"]');
+    //lo mostro
+    $(selettoreAvatar).addClass("current");
   });
 
 
@@ -87,7 +99,7 @@ $(document).ready(function() {
         if ( event.which === 13 || event.keyCode === 13 )
         {
           sendMessage();
-          autoAnswer("ok");
+          autoAnswer("okokokoko kokok okokokokokokokokokokokokok okokokokokokokokokokok okokok okokokokokokokokokok okok");
         }
 
       }
@@ -153,7 +165,7 @@ function sendMessage() {
   //appendo il clone di single-message a current-chat
   $(".chatbox > .window-chat.current").append(newMessage);
 
-  $(".chatbox > .window-chat.current").scrollTop($(".window-chat").prop("scrollHeight"));
+  $(".chatbox > .window-chat.current").scrollTop($(".window-chat.current").prop("scrollHeight"));
 
 }
 
@@ -200,7 +212,7 @@ function autoAnswer(answer) {
     //appendo il clone di single-message a current-chat
     $(".chatbox > .window-chat.current").append(newMessage);
 
-    $(".chatbox > .window-chat.current").scrollTop($(".window-chat").prop("scrollHeight"));
+    $(".chatbox > .window-chat.current").scrollTop($(".window-chat.current").prop("scrollHeight"));
 
   }, 1000); //1sec
 
