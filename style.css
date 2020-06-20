@@ -227,13 +227,15 @@ ul span {
   max-width: 60%;
   word-break: break-word;
   clear: both;
-  padding: 10px;
-  padding-right: 40px;
+  padding: 9px;
+  padding-right: 60px;
   padding-left: 10px;
   margin-bottom: 10px;
   border-radius: 10px;
+  font-size: 0.9em;
 }
 .window-chat.current .msg-arrow {
+  cursor: pointer;
   display: none;
 }
 .options {
@@ -252,7 +254,7 @@ ul span {
 .single-message.received > .options {
   left: auto;
   top: 25px;
-  right: -65px;
+  right: -60px;
 }
 .delete {
   cursor: pointer;

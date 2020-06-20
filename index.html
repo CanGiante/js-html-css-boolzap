@@ -7,7 +7,7 @@
     <!-- MYSTYLE --> <link rel="stylesheet" href="style.css">
     <!-- jQuery --> <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- MYSCRIPT --> <script src="main.js"></script>
-    <title>wa</title>
+    <title>Boolzapp</title>
   </head>
   <body>
     <!--///wrapper\\\-->
@@ -24,7 +24,7 @@
                       <!-- inizio header-left -->
                       <header class="header-left">
 
-                            <img class="my-avatar" src="img/avatar_io.jpg" alt="my-avatar">
+                            <img class="my-avatar" src="img/miafoto.png" alt="my-avatar">
 
                             <div class="actions">
 
@@ -245,21 +245,9 @@
                       <!-- inizio chat -->
                       <main class="chatbox">
 
-                         <div data-chat="1" class="window-chat current">
+                        <!-- NOTE: ogni contatto ha la sua chat -->
 
-                           <div class="single-message received">
-
-                                 <span class="msg-text">Non poteva essere altrimenti</span>
-                                 <span class="msg-time timestamp">00:00</span>
-                                 <span class="msg-arrow arrow">
-                                   <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                 </span>
-                                 <ul class="options">
-                                   <li>info</li>
-                                   <li class="delete">cancella</li>
-                                 </ul>
-
-                           </div></div>
+                         <div data-chat="1" class="window-chat current"></div>
 
                          <div data-chat="2" class="window-chat"></div>
 
@@ -281,20 +269,31 @@
                       <!-- inizio message -->
                       <footer class="send-message">
 
-                          <div class="smile-icon">
 
-                              <i class="far fa-smile"></i>
-                          </div>
+                            <!-- col sx, tasto emoji -->
+                            <div class="smile-icon">
 
-                          <div class="write">
+                                <i class="far fa-smile"></i>
 
-                              <input type="text" placeholder="Scrivi un messaggio">
-                          </div>
+                            </div>
+                            <!-- fine col sx -->
 
-                          <div id="btn-send" class="paperplane-icon">
+                            <!-- col centrale, input per scrivere un messaggio -->
+                            <div class="write">
 
-                              <i class="fas fa-paper-plane"></i>
-                          </div>
+                                <input type="text" placeholder="Scrivi un messaggio">
+
+                            </div>
+                            <!-- fine col centrale -->
+
+                            <!-- col dx, tasto invia -->
+                            <div id="btn-send" class="paperplane-icon">
+
+                                <i class="fas fa-paper-plane"></i>
+
+                            </div>
+                            <!-- fine col dx -->
+
 
                       </footer>
                       <!-- fine message -->
@@ -312,6 +311,8 @@
 
     <!--///templates\\\-->
     <div class="template">
+
+          <!-- NOTE: vedi funzione sendMessage() nel file js-->
 
           <div class="single-message">
 

@@ -27,45 +27,48 @@ $(document).ready(function() {
   //se clicco su un contatto mostro finestra chat relativa
   $(".contact").click(function() {
 
+    //ogni chat è display none
     $(".window-chat").removeClass("current");
+    //ogni avatar dei miei contatti è display none
     $(".avatar-contact").removeClass("current");
 
+    //leggo l'attributo data contact del contatto cliccato
+    var dataContact = $(this).attr('data-contact');
+    //cerco data-chat e data-avatar corrispondenti
+    var selettoreChat = $('.window-chat[data-chat="' + dataContact + '"]');
+    var selettoreAvatar = $('.avatar-contact[data-avatar="' + dataContact + '"]');
+    //li mostro
+    $(selettoreChat).addClass("current");
+    $(selettoreAvatar).addClass("current");
+
+    //stampo in header-right il nome del contatto
     var nomeContatto = $(this).find("h4").clone().text();
     $(".header-right > .info-contact > h4").text(nomeContatto);
 
-    //leggo il data contact
-    var dataContact = $(this).attr('data-contact');
-
-    //cerco il data-chat corrispondente
-    var selettoreChat = $('.window-chat[data-chat="' + dataContact + '"]');
-    //lo mostro
-    $(selettoreChat).addClass("current");
-
-    //cerco avatar corrispondente
-    var selettoreAvatar = $('.avatar-contact[data-avatar="' + dataContact + '"]');
-    //lo mostro
-    $(selettoreAvatar).addClass("current");
   });
 
 
   //RICERCA CONTATTO
-  $(".finder-input").keyup(function()
-  {
+  //cerco il nome del contatto contenente la sequenza di caratteri inseriti nell'input
+  $(".finder-input").keyup(function() {
+
+    //devo confrontare la coincidenza della stringa generata dall'utente
+    //con le stringhe contenute nei tag h4 di ciascun .contact
     var userSearch = $(this).val().toUpperCase();;
     var allContacts = $(".contact");
 
-    allContacts.each(function()
-    {
-      var contactName = $(this).find("h4").text().toUpperCase();;
+    //effettuo la verifica su ogni contatto ad ogni input
+    allContacts.each(function() {
 
-      if (contactName.includes(userSearch))
-      {
-          $(this).show();
-      }
+      //leggo il contenuto del tag h4, che ciascuno contiene
+      var contactName = $(this).find("h4").text().toUpperCase();
 
-      else
-      {
-          $(this).hide();
+      //lo mostro solo se il contenuto letto (il nome) include la sequenza
+      //di caratteri inseriti dall'utente, altrimenti lo nascondo
+      if (contactName.includes(userSearch)) {
+        $(this).show();
+      } else {
+        $(this).hide();
       }
 
     });
@@ -73,68 +76,74 @@ $(document).ready(function() {
   });
 
 
-  //INVIA MESSAGGIO//
-  //al click
-  $("#btn-send").click(function()
-    {
-      var valInput = $(".write input").val();
+  //INVIO MESSAGGIO
+  //per ciascuno dei due eventi:
+  //prendo il valore di input
+  //simulo invio messaggio (funzione sendMessage());
+  //simulo risposta automatica predefinita (funzione autoAnswer()).
 
-      if (valInput != "")
+  /// al click ///
+  $("#btn-send").click(function() {
+    var valInput = $(".write input").val();
 
-      {
-        sendMessage();
-        autoAnswer("ok");
-      }
-
+    //a meno che il campo input non sia vuoto
+    if (valInput != "") {
+      sendMessage();
+      autoAnswer("ok");
     }
-  );
-  //alla pressione del tasto invio
-  $(".write input").keypress(function(event)
-    {
-      var valInput = $(".write input").val();
-
-      if (valInput != "")
-      {
-
-        if ( event.which === 13 || event.keyCode === 13 )
-        {
-          sendMessage();
-          autoAnswer("okokokoko kokok okokokokokokokokokokokokok okokokokokokokokokokok okokok okokokokokokokokokok okok");
-        }
-
-      }
-
-    }
-  );
-
-
-  //CANCELLA MESSAGGIO
-  $(document).on("mouseenter", ".single-message", function() {
-
-    $(".msg-arrow").hide();
-    $(this).children(".msg-arrow").show();
 
   });
 
+  /// alla pressione del tasto invio ///
+  $(".write input").keypress(function(event) {
+    var valInput = $(".write input").val();
+
+    //a meno che il campo input non sia vuoto
+    if (valInput != "") {
+      if ( event.which === 13 || event.keyCode === 13 ) {
+        sendMessage();
+        autoAnswer("OHOHOHOHOHOHOHOHHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOH OHOHOH OHOHOH OHOHOH");
+      }
+    }
+
+  });
+
+
+  //ELIMINAZIONE MESSAGGIO
+  //entrando col mouse sul messaggio appare chevron-down,
+  //se ci clicco appare un dropdown contenente un <li class="delete">,
+  //che se cliccato cancella il messaggio
+  $(document).on("mouseenter", ".single-message", function() {
+    //nascondo tutte le frecce
+    $(".msg-arrow").hide();
+    //mostro solo la freccia figlia del messaggio su cui ho fatto effettivamente mouseenter
+    $(this).children(".msg-arrow").show();
+  });
+
+  $(document).on("mouseleave", ".single-message", function() {
+    //chiudo la freccia figlia del messaggio da cui ho fatto mouseleave
+    $(this).children(".msg-arrow").hide();
+  });
 
   $(document).on("click", ".msg-arrow", function() {
-
+    //apro e chiudo un dropdown
     $(this).siblings(".options").toggleClass("visible");
+    //quando apro un dropdown chiudo tutti gli altri
+    //(i figli dei fratelli del suo genitore)
     $(this).parent().siblings().find(".options").removeClass("visible");
-
+    //se necessario scrollo
+    $(".chatbox > .window-chat.current").scrollTop($(".window-chat.current").prop("scrollHeight"));
   });
-
 
   $(document).on("click", ".delete", function() {
-
+    //al click simulo eliminazione messaggio
     $(this).closest(".single-message").hide();
-
   });
 
 
-});///end//ready///
+});//end_ready
 
-//\FUNCTIONS///\
+//\FUNCTIONS//\
 //questa funzione stampa nella chat il valore inserito nel campo input.
 /// N.B. struttura e stile vengono definiti sulla
 ///falsa riga di un template nascosto nell' html
@@ -157,19 +166,18 @@ function sendMessage() {
   //lo stampo nell'elemento apposito del template e
   //gli aggiungo direttamente anche la classe che definisce il suo stile
   newMessage.children(".msg-time").text(currentTime).addClass("timestamp");
-
-
+  //aggiungo lo stile alla chevron-down
   newMessage.children(".msg-arrow").addClass("arrow");
-
 
   //appendo il clone di single-message a current-chat
   $(".chatbox > .window-chat.current").append(newMessage);
-
+  //se necessario scrollo
   $(".chatbox > .window-chat.current").scrollTop($(".window-chat.current").prop("scrollHeight"));
 
 }
 
-//aggiungi uno zero se inferiore a 10
+//questa funzione aggiunge uno zero davanti a un numero inferiore a 10
+//modifica aspetto orario stampato
 function addZero(number) {
 
   if (number < 10) {
@@ -203,15 +211,13 @@ function autoAnswer(answer) {
     //lo stampo nell'elemento apposito del template e
     //gli aggiungo direttamente anche la classe che definisce il suo stile
     newMessage.children(".msg-time").text(currentTime).addClass("timestamp");
-
-
+    //aggiungo lo stile alla chevron-down
     newMessage.children(".msg-arrow").addClass("arrow");
-
 
 
     //appendo il clone di single-message a current-chat
     $(".chatbox > .window-chat.current").append(newMessage);
-
+    //se necessario scrollo
     $(".chatbox > .window-chat.current").scrollTop($(".window-chat.current").prop("scrollHeight"));
 
   }, 1000); //1sec
