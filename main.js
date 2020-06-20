@@ -1,38 +1,40 @@
-// Boolzapp
+ //Boolzapp
 
-// Milestone 1
-// Replica della grafica con la possibilità di avere messaggi scritti dall’utente
-// (verdi) e dall’interlocutore (bianco) assegnando due classi CSS diverse
-// Aggiunta di un messaggio: l’utente scrive un testo nella parte bassa e
-// cliccando “invia” il testo viene aggiunto al thread sopra, come messaggio verde
+            // Milestone 1
+            // Replica della grafica con la possibilità di avere messaggi scritti dall’utente
+            // (verdi) e dall’interlocutore (bianco) assegnando due classi CSS diverse
+            // Aggiunta di un messaggio: l’utente scrive un testo nella parte bassa e
+            // cliccando “invia” il testo viene aggiunto al thread sopra, come messaggio verde
 
-// Milestone 2
-// Risposta dall’interlocutore: ad ogni inserimento di un messaggio, l’utente
-// riceverà un “ok” come risposta, che apparirà dopo 1 secondo.
-// Ricerca utenti: scrivendo qualcosa nell’input a sinistra, vengono visualizzati
-// solo i contatti il cui nome contiene le lettere inserite
-// (es, Marco, Matteo Martina -> Scrivo “mar” rimangono solo Marco e Martina)
+      // Milestone 2
+      // Risposta dall’interlocutore: ad ogni inserimento di un messaggio, l’utente
+      // riceverà un “ok” come risposta, che apparirà dopo 1 secondo.
+      // Ricerca utenti: scrivendo qualcosa nell’input a sinistra, vengono visualizzati
+      // solo i contatti il cui nome contiene le lettere inserite
+      // (es, Marco, Matteo Martina -> Scrivo “mar” rimangono solo Marco e Martina)
 
 // Milestone 3
 // Click sul contatto mostra la conversazione del contatto cliccato,
 // è possibile inserire nuovi messaggi per ogni conversazione
 // Cancella messaggio: cliccando sul messaggio appare un menu a tendina che
 // permette di cancellare il messaggio selezionato
-
-
-
 $(document).ready(function() {
 
-  //SELEZIONE CHAT
+
+  //___SELEZIONE CHAT___//
   //se clicco su un contatto mostro finestra chat relativa
   $(".contact").click(function() {
 
-    //ogni chat è display none
+    //evidenzio ultimo contatto cliccato
+    $(this).addClass('selected');
+    $(this).siblings().removeClass('selected');
+
+    //ogni .window-chat è display none
     $(".window-chat").removeClass("current");
-    //ogni avatar dei miei contatti è display none
+    //ogni .avatar-contact (blocco .header-right) dei miei contatti è display none
     $(".avatar-contact").removeClass("current");
 
-    //leggo l'attributo data contact del contatto cliccato
+    //leggo l'attributo data-contact del contatto cliccato
     var dataContact = $(this).attr('data-contact');
     //cerco data-chat e data-avatar corrispondenti
     var selettoreChat = $('.window-chat[data-chat="' + dataContact + '"]');
@@ -41,14 +43,14 @@ $(document).ready(function() {
     $(selettoreChat).addClass("current");
     $(selettoreAvatar).addClass("current");
 
-    //stampo in header-right il nome del contatto
+    //stampo in .header-right il nome del contatto
     var nomeContatto = $(this).find("h4").clone().text();
     $(".header-right > .info-contact > h4").text(nomeContatto);
 
   });
 
 
-  //RICERCA CONTATTO
+  //___RICERCA CONTATTO___//
   //cerco il nome del contatto contenente la sequenza di caratteri inseriti nell'input
   $(".finder-input").keyup(function() {
 
@@ -76,20 +78,35 @@ $(document).ready(function() {
   });
 
 
-  //INVIO MESSAGGIO
-  //per ciascuno dei due eventi:
-  //prendo il valore di input
+  //___INVIO MESSAGGIO___//
+  //gestisco la classe visible del tasto invio;
+  //al click o all'enter prendo il valore di input e:
   //simulo invio messaggio (funzione sendMessage());
   //simulo risposta automatica predefinita (funzione autoAnswer()).
 
+    //cliccando nell'html rendo visibile solo l'icona microfono//
+    $("html").click(function() {
+      $(".btn.mic").addClass("visible");
+      $(".btn.send").removeClass("visible");
+    });
+    //cliccando .write > input rendo visibile solo l'icona paperplane//
+    $(document).on("click", ".write > input", function() {
+      $(".btn.mic").removeClass("visible");
+      $(".btn.send").addClass("visible");
+    });
+
   /// al click ///
-  $("#btn-send").click(function() {
-    var valInput = $(".write input").val();
+  $(".btn").click(function() {
+    var valInput = $(".write > input").val();
 
     //a meno che il campo input non sia vuoto
     if (valInput != "") {
+      //stampo un messaggio inviato
       sendMessage();
-      autoAnswer("ok");
+      //stampo un messaggio ricevuto
+      autoAnswer("Non poteva essere altrimenti");
+      //svuoto input
+      $(".write > input").val("");
     }
 
   });
@@ -101,15 +118,19 @@ $(document).ready(function() {
     //a meno che il campo input non sia vuoto
     if (valInput != "") {
       if ( event.which === 13 || event.keyCode === 13 ) {
+        //stampo un messaggio inviato
         sendMessage();
-        autoAnswer("OHOHOHOHOHOHOHOHHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOH OHOHOH OHOHOH OHOHOH");
+        //stampo un messaggio ricevuto
+        autoAnswer("Non poteva essere altrimenti OHOHOHOHOHOHOHOHHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOH");
+        //svuoto input
+        $(".write > input").val("");
       }
     }
 
   });
 
 
-  //ELIMINAZIONE MESSAGGIO
+  //___ELIMINAZIONE MESSAGGIO___//
   //entrando col mouse sul messaggio appare chevron-down,
   //se ci clicco appare un dropdown contenente un <li class="delete">,
   //che se cliccato cancella il messaggio
@@ -143,10 +164,10 @@ $(document).ready(function() {
 
 });//end_ready
 
-//\FUNCTIONS//\
+//\_FUNCTIONS_//\
 //questa funzione stampa nella chat il valore inserito nel campo input.
-/// N.B. struttura e stile vengono definiti sulla
-///falsa riga di un template nascosto nell' html
+// N.B. struttura e stile vengono definiti sulla
+//falsa riga di un template nascosto nell' html
 function sendMessage() {
 
   //salvo il valore di input in una variabile
@@ -159,10 +180,10 @@ function sendMessage() {
   newMessage.addClass("sent");
 
   //genero orario
-      var date = new Date();
-      var currentHours = date.getHours();
-      var currentMinutes = date.getMinutes();
-      var currentTime = addZero(currentHours) + ":" + addZero(currentMinutes);
+    var date = new Date();
+    var currentHours = date.getHours();
+    var currentMinutes = date.getMinutes();
+    var currentTime = addZero(currentHours) + ":" + addZero(currentMinutes);
   //lo stampo nell'elemento apposito del template e
   //gli aggiungo direttamente anche la classe che definisce il suo stile
   newMessage.children(".msg-time").text(currentTime).addClass("timestamp");
@@ -185,7 +206,6 @@ function addZero(number) {
   }
 
   return number;
-
 }
 
 //funzione simile a sendMessage(),
@@ -207,10 +227,10 @@ function autoAnswer(answer) {
         var currentHours = date.getHours();
         var currentMinutes = date.getMinutes();
         var currentTime = addZero(currentHours) + ":" + addZero(currentMinutes);
-
     //lo stampo nell'elemento apposito del template e
     //gli aggiungo direttamente anche la classe che definisce il suo stile
     newMessage.children(".msg-time").text(currentTime).addClass("timestamp");
+
     //aggiungo lo stile alla chevron-down
     newMessage.children(".msg-arrow").addClass("arrow");
 
