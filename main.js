@@ -20,7 +20,6 @@
 // permette di cancellare il messaggio selezionato
 $(document).ready(function() {
 
-
   //___SELEZIONE CHAT___//
   //se clicco su un contatto mostro finestra chat relativa
   $(".contact").click(function() {
@@ -34,18 +33,38 @@ $(document).ready(function() {
     //ogni .avatar-contact (blocco .header-right) dei miei contatti è display none
     $(".avatar-contact").removeClass("current");
 
+
+//
+    $(".last-access").removeClass("current");
+//
+
+
     //leggo l'attributo data-contact del contatto cliccato
     var dataContact = $(this).attr('data-contact');
     //cerco data-chat e data-avatar corrispondenti
     var selettoreChat = $('.window-chat[data-chat="' + dataContact + '"]');
     var selettoreAvatar = $('.avatar-contact[data-avatar="' + dataContact + '"]');
+
+
+//
+    var selettoreAccess = $('.last-access[data-access="' + dataContact + '"]');
+//
+
+
     //li mostro
     $(selettoreChat).addClass("current");
     $(selettoreAvatar).addClass("current");
 
+
+//
+    $(selettoreAccess).addClass("current");
+//
+
+
     //stampo in .header-right il nome del contatto
     var nomeContatto = $(this).find("h4").clone().text();
     $(".header-right > .info-contact > h4").text(nomeContatto);
+
 
   });
 
@@ -79,8 +98,8 @@ $(document).ready(function() {
 
 
   //___INVIO MESSAGGIO___//
-  //gestisco la classe visible del tasto invio;
-  //al click o all'enter prendo il valore di input e:
+  //gestisco la classe visible del tasto di invio messaggio;
+  //al click (o all'enter): prendo il valore di input e:
   //simulo invio messaggio (funzione sendMessage());
   //simulo risposta automatica predefinita (funzione autoAnswer()).
 
@@ -103,10 +122,29 @@ $(document).ready(function() {
     if (valInput != "") {
       //stampo un messaggio inviato
       sendMessage();
+
+
+//
+
+      // staScrivendo();
+
+//
+
+
       //stampo un messaggio ricevuto
-      autoAnswer("Non poteva essere altrimenti");
+      autoAnswer("Ok");
       //svuoto input
       $(".write > input").val("");
+
+
+//
+      stampCurrentTime($(".contacts > .contact.selected > div > span"));
+      // $(".content > .header-right > .info-contact > .last-access.current").text("Online");
+
+
+//
+
+
     }
 
   });
@@ -121,9 +159,17 @@ $(document).ready(function() {
         //stampo un messaggio inviato
         sendMessage();
         //stampo un messaggio ricevuto
-        autoAnswer("Non poteva essere altrimenti OHOHOHOHOHOHOHOHHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOH");
+        autoAnswer("OHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOHOH OH OH");
         //svuoto input
         $(".write > input").val("");
+
+
+//
+        stampCurrentTime($(".contacts > .contact.selected > div > span"));
+//
+
+
+
       }
     }
 
@@ -152,8 +198,12 @@ $(document).ready(function() {
     //quando apro un dropdown chiudo tutti gli altri
     //(i figli dei fratelli del suo genitore)
     $(this).parent().siblings().find(".options").removeClass("visible");
-    //se necessario scrollo
-    $(".chatbox > .window-chat.current").scrollTop($(".window-chat.current").prop("scrollHeight"));
+
+//
+    // //se necessario scrollo
+    // $(".chatbox > .window-chat.current").scrollTop($(".window-chat.current").prop("scrollHeight"));
+//
+
   });
 
   $(document).on("click", ".delete", function() {
@@ -176,6 +226,8 @@ function sendMessage() {
   var newMessage = $(".template .single-message").clone();
   //stampo in un suo figlio il valore di input
   newMessage.children(".msg-text").text(messageText);
+      //stampo la stessa stringa salvata in messageText anche in .preview
+      $(".contact.selected > .preview > p").text(messageText);
   //aggiungo al clone lo stile dei messaggi inviati
   newMessage.addClass("sent");
 
@@ -183,10 +235,10 @@ function sendMessage() {
     var date = new Date();
     var currentHours = date.getHours();
     var currentMinutes = date.getMinutes();
-    var currentTime = addZero(currentHours) + ":" + addZero(currentMinutes);
+    var time = addZero(currentHours) + ":" + addZero(currentMinutes);
   //lo stampo nell'elemento apposito del template e
   //gli aggiungo direttamente anche la classe che definisce il suo stile
-  newMessage.children(".msg-time").text(currentTime).addClass("timestamp");
+  newMessage.children(".msg-time").text(time).addClass("timestamp");
   //aggiungo lo stile alla chevron-down
   newMessage.children(".msg-arrow").addClass("arrow");
 
@@ -219,29 +271,76 @@ function autoAnswer(answer) {
     var newMessage = $(".template .single-message").clone();
     //stampo in un suo figlio la stringa passata come argomento
     newMessage.children(".msg-text").text(answer);
+        //stampo la stessa stringa anche in ''.contacts .preview''
+        $(".contact.selected > .preview > p").text(answer);
     //aggiungo al clone lo stile dei messaggi ricevuti
     newMessage.addClass("received");
 
     //genero orario
-        var date = new Date();
-        var currentHours = date.getHours();
-        var currentMinutes = date.getMinutes();
-        var currentTime = addZero(currentHours) + ":" + addZero(currentMinutes);
+      var date = new Date();
+      var currentHours = date.getHours();
+      var currentMinutes = date.getMinutes();
+      var time = addZero(currentHours) + ":" + addZero(currentMinutes);
     //lo stampo nell'elemento apposito del template e
     //gli aggiungo direttamente anche la classe che definisce il suo stile
-    newMessage.children(".msg-time").text(currentTime).addClass("timestamp");
+    newMessage.children(".msg-time").text(time).addClass("timestamp");
 
     //aggiungo lo stile alla chevron-down
     newMessage.children(".msg-arrow").addClass("arrow");
-
 
     //appendo il clone di single-message a current-chat
     $(".chatbox > .window-chat.current").append(newMessage);
     //se necessario scrollo
     $(".chatbox > .window-chat.current").scrollTop($(".window-chat.current").prop("scrollHeight"));
 
-  }, 1000); //1sec
+    //
+    var orarioUltimoAccesso = stampCurrentTime($(".content > .header-right > .info-contact > .last-access.current > span"));
+    $(".content > .header-right > .info-contact > .last-access").text("Ultimo accesso alle " + ultimo);
+    //
+
+
+
+
+  }, 3000); //3sec
 
   return answer;
+
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
+
+//mancano:
+
+/*
+home page
+BUG BTN SEND
+bug scroll
+sta scrivendo
+prependi ultimo contatto con cui hai avuto conversazione
+dark mode
+*/
+
+
+function stampCurrentTime(selector) {
+
+  //genero orario
+  var date = new Date();
+  var currentHours = date.getHours();
+  var currentMinutes = date.getMinutes();
+  var time = addZero(currentHours) + ":" + addZero(currentMinutes);
+  $(selector).text(time);
+
+  return selettore;
+}
+
+
+
+
+function staScrivendo() {
+
+  setTimeout(function() {
+    $(".content > .header-right > .info-contact > .last-access.current").text("Sta scrivendo...");
+  }, 2000); //2sec
 
 }
