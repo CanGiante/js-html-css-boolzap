@@ -115,7 +115,7 @@ $(document).ready(function() {
     });
 
   /// al click ///
-  $(".btn").click(function() {
+  $(".btn.send").click(function() {
     var valInput = $(".write > input").val();
 
     //a meno che il campo input non sia vuoto
@@ -314,7 +314,6 @@ function autoAnswer(answer) {
 
 /*
 home page
-BUG BTN SEND
 bug scroll
 sta scrivendo
 prependi ultimo contatto con cui hai avuto conversazione
