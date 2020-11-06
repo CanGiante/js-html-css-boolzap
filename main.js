@@ -33,11 +33,8 @@ $(document).ready(function() {
     //ogni .avatar-contact (blocco .header-right) dei miei contatti è display none
     $(".avatar-contact").removeClass("current");
 
-
-//
+    /// NOTE: DA COMMENTARE////////////////////////////////////////////////////////////////////////////
     $(".last-access").removeClass("current");
-//
-
 
     //leggo l'attributo data-contact del contatto cliccato
     var dataContact = $(this).attr('data-contact');
@@ -45,29 +42,21 @@ $(document).ready(function() {
     var selettoreChat = $('.window-chat[data-chat="' + dataContact + '"]');
     var selettoreAvatar = $('.avatar-contact[data-avatar="' + dataContact + '"]');
 
-
-//
+    /// NOTE: DA COMMENTARE////////////////////////////////////////////////////////////////////////////
     var selettoreAccess = $('.last-access[data-access="' + dataContact + '"]');
-//
-
 
     //li mostro
     $(selettoreChat).addClass("current");
     $(selettoreAvatar).addClass("current");
 
-
-//
+    /// NOTE: DA COMMENTARE//////////////////////////////////////////////////////////////////////////
     $(selettoreAccess).addClass("current");
-//
-
 
     //stampo in .header-right il nome del contatto
-    var nomeContatto = $(this).find("h4").clone().text();
-    $(".header-right > .info-contact > h4").text(nomeContatto);
-
+    var contactName = $(this).find("h4").text();
+    $(".header-right > .info-contact > h4").text(contactName);
 
   });
-
 
   //___RICERCA CONTATTO___//
   //cerco il nome del contatto contenente la sequenza di caratteri inseriti nell'input
@@ -75,7 +64,7 @@ $(document).ready(function() {
 
     //devo confrontare la coincidenza della stringa generata dall'utente
     //con le stringhe contenute nei tag h4 di ciascun .contact
-    var userSearch = $(this).val().toUpperCase();;
+    var userSearch = $(this).val().toUpperCase();
     var allContacts = $(".contact");
 
     //effettuo la verifica su ogni contatto ad ogni input
@@ -123,27 +112,16 @@ $(document).ready(function() {
       //stampo un messaggio inviato
       sendMessage();
 
-
-//
-
-      // staScrivendo();
-
-//
-
+      // staScrivendo();////////////////////////////////////////////////////////////////////////////////////
 
       //stampo un messaggio ricevuto
       autoAnswer("Ok");
       //svuoto input
       $(".write > input").val("");
 
-
-//
+      /// NOTE: DA COMMENTARE//////////////////////////////////////////////////////////////////////////////
       stampCurrentTime($(".contacts > .contact.selected > div > span"));
-      // $(".content > .header-right > .info-contact > .last-access.current").text("Online");
-
-
-//
-
+      // $(".content > .header-right > .info-contact > .last-access.current").text("Online");//////////////
 
     }
 
@@ -163,12 +141,8 @@ $(document).ready(function() {
         //svuoto input
         $(".write > input").val("");
 
-
-//
+        /// NOTE: DA COMMENTARE//////////////////////////////////////////////////////////////////////////
         stampCurrentTime($(".contacts > .contact.selected > div > span"));
-//
-
-
 
       }
     }
@@ -199,12 +173,27 @@ $(document).ready(function() {
     //(i figli dei fratelli del suo genitore)
     $(this).parent().siblings().find(".options").removeClass("visible");
 
-//
-    // //se necessario scrollo
-    // $(".chatbox > .window-chat.current").scrollTop($(".window-chat.current").prop("scrollHeight"));
-//
+    /// se necessario scrollo \\\
+        // console.log($(".window-chat.current > .single-message").last().find(".msg-arrow"));
+        // console.log($(".window-chat.current > .single-message").find(".msg-arrow"));
+        // //tentativo 1
+        // // $(".window-chat.current").children(".single-message:last-child").find(".msg-arrow").click(function() {
+        // //   $(".chatbox > .window-chat.current").scrollTop($(".window-chat.current").prop("scrollHeight"));
+        // // });
+        // // //tentativo 2
+        // // $(document).on("click", $(".window-chat.current > .single-message").last().find(".msg-arrow"), function() {
+        // //   $(".chatbox > .window-chat.current").scrollTop($(".window-chat.current").prop("scrollHeight"));
+        // // });
+        // //tentativo 3
+        // $(document).on("click", $(".window-chat.current > .single-message").last().find(".msg-arrow"), function() {
+        //   ///metodo 1: *BUGGATO*
+        //   $(".chatbox > .window-chat.current").scrollTop( $("footer").offset().top );
+        //   ///metodo 2: *BUGGATO*
+        //   // $(".chatbox > .window-chat.current").animate({scrollTop: $("footer").offset().top}, 3000);
+        // });
 
   });
+
 
   $(document).on("click", ".delete", function() {
     //al click simulo eliminazione messaggio
@@ -294,8 +283,7 @@ function autoAnswer(answer) {
     $(".chatbox > .window-chat.current").scrollTop($(".window-chat.current").prop("scrollHeight"));
 
     //
-    var orarioUltimoAccesso = stampCurrentTime($(".content > .header-right > .info-contact > .last-access.current > span"));
-    $(".content > .header-right > .info-contact > .last-access").text("Ultimo accesso alle " + ultimo);
+    stampCurrentTime($(".content > .header-right > .info-contact > .last-access.current > span"));
     //
 
 
@@ -308,16 +296,20 @@ function autoAnswer(answer) {
 }
 
 
-/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //mancano:
 
 /*
 home page
-bug scroll
-sta scrivendo
+scroll quando apri dropdown
+rimpiazzare sta scrivendo
 prependi ultimo contatto con cui hai avuto conversazione
+l'ultimo messaggio nel main deve essere lo stesso dell'anteprima
 dark mode
+controllo invio spazio bianco
+sidebar allargabile
+
 */
 
 
@@ -330,7 +322,7 @@ function stampCurrentTime(selector) {
   var time = addZero(currentHours) + ":" + addZero(currentMinutes);
   $(selector).text(time);
 
-  return selettore;
+  return selector;
 }
 
 
@@ -340,6 +332,6 @@ function staScrivendo() {
 
   setTimeout(function() {
     $(".content > .header-right > .info-contact > .last-access.current").text("Sta scrivendo...");
-  }, 2000); //2sec
+  }, 1000); //1sec
 
 }
